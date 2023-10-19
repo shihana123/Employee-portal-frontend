@@ -26,7 +26,19 @@ const router = createRouter({
       children: [
         {
           path: '/employeeList',
-          component: () => import('../admin/tables.vue'),
+          component: () => import('../admin/employee_list.vue'),
+        },
+      ],
+      meta: { requiresAuth: true, roles: ['1'] }, 
+    },
+    { 
+      path: '/createEmployee', 
+      name: 'Employee Create', 
+      component: () => import('../layouts/default.vue'),
+      children: [
+        {
+          path: '/createEmployee',
+          component: () => import('../admin/employee-create.vue'),
         },
       ],
       meta: { requiresAuth: true, roles: ['1'] }, 
