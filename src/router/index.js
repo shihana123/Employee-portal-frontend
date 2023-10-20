@@ -43,6 +43,31 @@ const router = createRouter({
       ],
       meta: { requiresAuth: true, roles: ['1'] }, 
     },
+    { 
+      path: '/detailsEmployee/:id', 
+      name: 'Employee Details', 
+      component: () => import('../layouts/default.vue'),
+      children: [
+        {
+          path: '/detailsEmployee/:id',
+          component: () => import('../admin/employee-details.vue'),
+        },
+      ],
+      meta: { requiresAuth: true, roles: ['1'] }, 
+    },
+    { 
+      path: '/editEmployee/:id', 
+      name: 'Employee Update', 
+      component: () => import('../layouts/default.vue'),
+      children: [
+        {
+          path: '/editEmployee/:id',
+          component: () => import('../admin/employee-update.vue'),
+        },
+      ],
+      meta: { requiresAuth: true, roles: ['1'] }, 
+    },
+
     //employee
     { 
       path: '/dashboardEmployee', 

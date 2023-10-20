@@ -7,22 +7,28 @@
   >
     <thead>
       <tr>
-        <th class="text-uppercase">
+        <th class="text-center">
           Employee Name
         </th>
-        <th>
-          Email
-        </th>
-        <th>
-          Phone
-        </th>
-        <th>
-          Designation
-        </th>
-        <th>
+        <th class="text-center">
           Department
         </th>
-        <th>
+        <th class="text-center">
+          Role
+        </th>
+        <th class="text-center">
+          Education
+        </th>
+        <th class="text-center">
+          Mobile
+        </th>
+        <th class="text-center">
+          Email
+        </th>
+        <th class="text-center">
+          Joining Date
+        </th>
+        <th class="text-center">
           Action
         </th>
       </tr>
@@ -30,24 +36,53 @@
 
     <tbody>
       <tr
-        v-for="employees in employee"
-        :key="employees.employee"
-      >
-        <td>
+        v-for="employee in employees" :key="employee.id">
+        <td class="text-center">
           {{ employee.firstname }}
+        </td >
+        <td class="text-center">
+          {{ employee.department.department }}
         </td>
         <td class="text-center">
-          {{ item.calories }}
+          {{ employee.designation }}
         </td>
         <td class="text-center">
-          {{ item.fat }}
+          {{ employee.education }}
         </td>
         <td class="text-center">
-          {{ item.carbs }}
+          {{ employee.mobile_no }}
         </td>
         <td class="text-center">
-          {{ item.protein }}
+          {{ employee.user.email }}
         </td>
+        <td class="text-center">
+          {{ employee.joining_date }}
+        </td>
+        <td class="text-center">
+         <!-- view -->
+          <IconBtn
+          class="ms-n3 d-lg-none"
+          :to=" {name: 'Employee Details', params: { id: employee.id }}"
+        >
+          <VIcon icon="bx-bullseye" />
+        </IconBtn>
+          <!-- edit -->
+        <IconBtn
+          class="ms-n3 d-lg-none"
+          :to=" {name: 'Employee Update', params: { id: employee.id }}"
+        >
+          <VIcon icon="bx-edit-alt" />
+        </IconBtn>
+        <!-- delete -->
+        <IconBtn
+          class="ms-n3 d-lg-none"
+          @click="deleteEmployee(employee.id)"
+        >
+          <VIcon icon="bx-trash" />
+        </IconBtn>
+
+        </td>
+       
       </tr>
     </tbody>
   </VTable>
@@ -68,13 +103,22 @@ import axios from 'axios';
       getEmployees()
             {
               axios.get('/employees').then(response=>{
-                console.log(response);
+                
                 this.employees = response.data
               }).catch(error=>{
                   console.log(error)
                   this.employees = []
               })
-            }
+            },
+      deleteEmployee(id)
+          {
+            axios.delete(`/employees/${id}`).then(response=>{
+              this.$router.push({ name: 'Employee List' });
+              }).catch(error=>{
+                  console.log(error)
+                  this.employees = []
+              })
+          }
             
         },
       

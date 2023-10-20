@@ -1,5 +1,5 @@
 <template>
-    <VForm v-on:submit.prevent="createEmployee">
+    <VForm v-on:submit.prevent="updateEmployee">
         <p class="error" v-if="errorMessage">{{ errorMessage }}</p>
       <VRow>
         <!-- 👉 First Name -->
@@ -47,19 +47,7 @@
           />
         </VCol>
   
-        <VCol 
-        cols="12"
-          md="6"
-        >
-        <VTextField
-                  v-model="form.password"
-                  label="Password"
-                  placeholder="············"
-                  :type="isPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
-        </VCol>
+        
   
         <VCol 
         cols="12"
@@ -84,16 +72,7 @@
           />
         </VCol>
   
-        <VCol 
-        cols="12"
-          md="6"
-        >
-          <VTextField
-            v-model="form.email"
-            label="Email"
-            placeholder="Email"
-          />
-        </VCol>
+        
   
         <VCol 
         cols="12"
@@ -166,15 +145,14 @@ export default {
   data() {
     return {
         errorMessage: '',
+        employee: {},
         form:{
             firstname: '',
             lastname: '',
             gender: '',
             mobile_no: '',
-            password: '',
             designation: '',
             department_id: '',
-            email: '',
             address: '',
             dob: '',
             education: '',
@@ -184,12 +162,19 @@ export default {
       options: [],
     };
   },
-  
+  mounted() {
+            this.employee_details();
+        },
   methods:{
-    createEmployee()
+        employee_details()
             {
-                axios.post('/employees', this.form).then(res => {
-                    this.$router.push({ name: 'Employee List' });
+                const route = useRoute();
+                const id = route.params.id;
+                
+                axios.get('/employees/'+id, this.form).then(res => {
+                    
+                    this.employee = res.data;
+                    this.form =  this.employee ;
 
                }).catch(err =>{    
                    
@@ -200,6 +185,23 @@ export default {
                    }
                    
                });
+            },
+        updateEmployee()
+            {
+                var id = `${this.$route.params.id}`;
+                
+                axios.put('/employees/'+id, this.form).then(res => {
+                    this.$router.push({ name: 'Employee List' });
+
+                }).catch(err =>{    
+                    
+                    if(err.response.data.message)
+                    {
+                        this.errorMessage = err.response.data.message;
+                        console.log(this.errorMessage);
+                    }
+                    
+                });
             }
         }
 };

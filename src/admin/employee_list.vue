@@ -26,6 +26,10 @@ import EmployeeListTable from '@/views/pages/form-layouts/employee/EmployeeList.
     </VCol>
   </VRow>
 </template>
-
+<style>
+.v-card{
+  height: 800px;
+}
+</style>
 <script>
 </script>
