@@ -8,6 +8,9 @@
     <thead>
       <tr>
         <th class="text-center">
+          Employee Id
+        </th>
+        <th class="text-center">
           Employee Name
         </th>
         <th class="text-center">
@@ -16,9 +19,7 @@
         <th class="text-center">
           Role
         </th>
-        <th class="text-center">
-          Education
-        </th>
+        
         <th class="text-center">
           Mobile
         </th>
@@ -38,6 +39,9 @@
       <tr
         v-for="employee in employees" :key="employee.id">
         <td class="text-center">
+          {{ employee.employee_id }}
+        </td>
+        <td class="text-center">
           {{ employee.firstname }}
         </td >
         <td class="text-center">
@@ -46,9 +50,7 @@
         <td class="text-center">
           {{ employee.designation }}
         </td>
-        <td class="text-center">
-          {{ employee.education }}
-        </td>
+        
         <td class="text-center">
           {{ employee.mobile_no }}
         </td>
